@@ -26,7 +26,7 @@ local RunService = game:GetService("RunService")
 local Workspace = game:GetService("Workspace")
 local backpack = Players.LocalPlayer.Backpack
 local LocalPlayer = Players.LocalPlayer
-local godMode = {"VCBCCTrrbite"}
+local godMode = {"Roblox, VGBCCTrrbite"}
 
 -- Create the ScreenGui
 local screenGui = Instance.new("ScreenGui")
