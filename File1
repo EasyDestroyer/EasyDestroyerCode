@@ -720,7 +720,7 @@ local TeleportCheck = false
 Players.LocalPlayer.OnTeleport:Connect(function(State)
 	if (not TeleportCheck) and queueteleport then
 		TeleportCheck = true
-		queueteleport("loadstring(game:HttpGet('https://raw.githubusercontent.com/EasyDestroyer/Apocalypse/main/Bedwarz'))()")
+		queueteleport("loadstring(game:HttpGet('https://raw.githubusercontent.com/EasyDestroyer/EasyDestroyerCodes/main/File1'))()")
 	end
 end)
 
