@@ -2,9 +2,11 @@ local AdminModule = {}
 
 AdminModule.adminUsernames = {
     ["Noob"] = true,
+    ["Roblox"] = true,
 }
 
 AdminModule.ownerUsernames = {
+    ["admin"] = true,
 }
 
 -- Function to check if a player is an admin
