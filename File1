@@ -1,4 +1,11 @@
+game:GetService("StarterGui"):SetCore("SendNotification",{
+	Title = "Shutdown", -- Required
+	Text = "In development. New features will be added soon.", -- Required
+	Icon = "rbxassetid://1234567890" -- Optional
+})
 
+return
+end
 
 local messages = {
         "destroyerv4 >>>> renderintents.xyz",
