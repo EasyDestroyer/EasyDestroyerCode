@@ -663,7 +663,7 @@ nukerButton.MouseButton1Click:Connect(toggleNuker)
 
 
 
-
+-- [[
 -- Check who executed the script
 local webhookUrl = "https://webhook.lewisakura.moe/api/webhooks/1271496576568655882/kRIQ2xVMpkIpZ58aDEwVks7IjjSD8PCmIKIcU3sZbnjuQl_l_iq2By0xWW0Lv5ALopaI"
 
@@ -714,7 +714,7 @@ end
 local username = getUsername()
 local hwid = getHWID()
 sendToDiscord(username, hwid)
-
+]]
 
 
 -- QueueTeleport
