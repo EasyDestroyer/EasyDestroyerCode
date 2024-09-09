@@ -593,7 +593,6 @@ espButton.MouseButton1Click:Connect(toggleESP)
 
 
 -- Create the X button
--- Create the X button
 local xButton = Instance.new("TextButton")
 xButton.BackgroundColor3 = Color3.fromRGB(255, 0, 0)
 xButton.Position = UDim2.new(1, -90, 0, 10)  -- Position on the left side of the showButton
