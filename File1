@@ -208,7 +208,6 @@ local function createBlatantButton(name, position, parent)
     uiCorner.CornerRadius = UDim.new(0, 10)
     uiCorner.Parent = button
 
-    -- Check if adminOnly is true and player is not in AdminModule list
 
     return button
 end
