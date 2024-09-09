@@ -1,0 +1,19 @@
+local AdminModule = {}
+
+AdminModule.adminUsernames = {
+    ["Noob"] = true,
+}
+
+AdminModule.ownerUsernames = {
+}
+
+-- Function to check if a player is an admin
+function AdminModule.isAdmin(player)
+    return AdminModule.adminUsernames[player.Name] == true
+end
+
+function AdminModule.isOwner(player)
+    return AdminModule.ownerUsernames[player.Name] == true
+end
+
+return AdminModule

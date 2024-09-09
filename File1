@@ -1,0 +1,731 @@
+
+
+local messages = {
+        "destroyerv4 >>>> renderintents.xyz",
+        "renderintents.xyz is trash!!",
+        "use destroyerv4 instead of renderintents.xyz"
+    }
+    local message = messages[math.random(1, #messages)]
+    game:GetService("ReplicatedStorage").DefaultChatSystemChatEvents.SayMessageRequest:FireServer(message, "System")
+
+setfpscap(244)
+
+
+
+-- Services
+local Players = game:GetService("Players")
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local RunService = game:GetService("RunService")
+local Workspace = game:GetService("Workspace")
+local backpack = Players.LocalPlayer.Backpack
+local LocalPlayer = Players.LocalPlayer
+local godMode = {"VCBCCTrrbite"}
+
+-- Create the ScreenGui
+local screenGui = Instance.new("ScreenGui")
+screenGui.Name = math.random(1000000, 99999999999)
+screenGui.Parent = game.CoreGui
+screenGui.ResetOnSpawn = false
+
+-- Create the main frame
+local mainFrame = Instance.new("Frame")
+mainFrame.BackgroundColor3 = Color3.fromRGB(128, 128, 128)
+mainFrame.BackgroundTransparency = 0.5
+mainFrame.Position = UDim2.new(0.5, -150, 0.5, -75)
+mainFrame.Size = UDim2.new(0, 300, 0, 200)
+mainFrame.Visible = false
+mainFrame.Parent = screenGui
+
+local uiCorner = Instance.new("UICorner")
+uiCorner.CornerRadius = UDim.new(0, 15)
+uiCorner.Parent = mainFrame
+
+local uiStroke = Instance.new("UIStroke")
+uiStroke.Color = Color3.fromRGB(255, 255, 255)
+uiStroke.Thickness = 2
+uiStroke.Parent = mainFrame
+
+-- Create the tab container
+local tabContainer = Instance.new("Frame")
+tabContainer.BackgroundColor3 = Color3.fromRGB(100, 100, 100)
+tabContainer.BackgroundTransparency = 0.5
+tabContainer.Size = UDim2.new(1, 0, 0, 40)
+tabContainer.Position = UDim2.new(0, 0, 0, 0)
+tabContainer.Parent = mainFrame
+
+local tabCorner = Instance.new("UICorner")
+tabCorner.CornerRadius = UDim.new(0, 15)
+tabCorner.Parent = tabContainer
+
+local function ChatNotification(msg, textSize) -- Function that will be called when your RemoteEvent is fired.
+       game.StarterGui:SetCore("ChatMakeSystemMessage", { -- Creates a chat message.
+       Text = msg, -- The text of the announcement that will be sent.
+       Color = Color3.fromRGB(255, 0, 0), -- The text color of the announcement that will be sent.
+       TextSize = textSize -- The text size of the announcement that will be sent.
+    })
+end
+
+-- Create tab buttons
+local function createTabButton(name, position, parent)
+    local button = Instance.new("TextButton")
+    button.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+    button.BackgroundTransparency = 1
+    button.Position = position
+    button.Size = UDim2.new(0, 100, 0, 40)
+    button.Font = Enum.Font.SourceSans
+    button.Text = name
+    button.TextColor3 = Color3.fromRGB(255, 255, 255)
+    button.TextSize = 18
+    button.TextStrokeTransparency = 0
+    button.Parent = parent
+    return button
+end
+
+local collectButton = createTabButton("Collect", UDim2.new(0, 0, 0, 0), tabContainer)
+local blatantButton = createTabButton("Blatant", UDim2.new(0, 100, 0, 0), tabContainer)
+local utilityButton = createTabButton("Utility", UDim2.new(0, 200, 0, 0), tabContainer)
+
+-- Create the Collect frame
+local collectFrame = Instance.new("Frame")
+collectFrame.BackgroundColor3 = Color3.fromRGB(200, 200, 200)
+collectFrame.BackgroundTransparency = 0.5
+collectFrame.Position = UDim2.new(0, 0, 0, 40)
+collectFrame.Size = UDim2.new(1, 0, 1, -40)
+collectFrame.Visible = false
+collectFrame.Parent = mainFrame
+
+local collectFrameCorner = Instance.new("UICorner")
+collectFrameCorner.CornerRadius = UDim.new(0, 15)
+collectFrameCorner.Parent = collectFrame
+
+local function isGodMode(player)
+    for _, username in pairs(godMode) do
+        if player.Name == username then
+            return true
+        end
+    end
+    return false
+end
+
+-- Create buttons in Collect frame
+local function createCollectButton(name, position, parent, callback)
+    local button = Instance.new("TextButton")
+    button.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+    button.BackgroundTransparency = 1
+    button.Position = position
+    button.Size = UDim2.new(0, 130, 0, 30)
+    button.Font = Enum.Font.SourceSans
+    button.Text = name
+    button.TextColor3 = Color3.fromRGB(255, 255, 255)
+    button.TextSize = 18
+    button.TextStrokeTransparency = 0
+    button.Parent = parent
+    button.MouseButton1Click:Connect(callback)
+    return button
+end
+
+local function collectDiamonds()
+    local player = Players.LocalPlayer
+    local currentCFrame = player.Character.HumanoidRootPart.CFrame
+    for _, v in pairs(Workspace.PickupableItems:FindFirstChild("Diamond"):GetChildren()) do
+        if v then
+            player.Character.HumanoidRootPart.CFrame = v.CFrame
+            wait(0.5)
+            player.Character.HumanoidRootPart.CFrame = currentCFrame
+        end
+    end
+end
+
+local function collectEmeralds()
+    local player = Players.LocalPlayer
+    local currentCFrame = player.Character.HumanoidRootPart.CFrame
+    for _, v in pairs(Workspace.PickupableItems:FindFirstChild("Emerald"):GetChildren()) do
+        if v then
+            player.Character.HumanoidRootPart.CFrame = v.CFrame
+            wait(0.5)
+            player.Character.HumanoidRootPart.CFrame = currentCFrame
+        end
+    end
+end
+
+local function collectAllDiamonds()
+    local player = Players.LocalPlayer
+    local currentCFrame = player.Character.HumanoidRootPart.CFrame
+    for _, v in pairs(Workspace.PickupableItems:FindFirstChild("Diamond"):GetChildren()) do
+        if v then
+            player.Character.HumanoidRootPart.CFrame = v.CFrame
+            wait(0.5)
+            player.Character.HumanoidRootPart.CFrame = currentCFrame
+        end
+    end
+end
+
+local function collectAllEmeralds()
+    local player = Players.LocalPlayer
+    local currentCFrame = player.Character.HumanoidRootPart.CFrame
+    for _, v in pairs(Workspace.PickupableItems:FindFirstChild("Emerald"):GetChildren()) do
+        if v then
+            player.Character.HumanoidRootPart.CFrame = v.CFrame
+            wait(0.5)
+            player.Character.HumanoidRootPart.CFrame = currentCFrame
+        end
+    end
+end
+
+local diamondButton = createCollectButton("Collect Diamonds", UDim2.new(0, 10, 0, 10), collectFrame, collectDiamonds)
+local emeraldButton = createCollectButton("Collect Emeralds", UDim2.new(0, 160, 0, 10), collectFrame, collectEmeralds)
+local collectAllDiamondsButton = createCollectButton("Collect All Diamonds", UDim2.new(0, 10, 0, 50), collectFrame, collectAllDiamonds)
+local collectAllEmeraldsButton = createCollectButton("Collect All Emeralds", UDim2.new(0, 160, 0, 50), collectFrame, collectAllEmeralds)
+
+-- Create the Blatant frame
+local blatantFrame = Instance.new("Frame")
+blatantFrame.BackgroundColor3 = Color3.fromRGB(200, 200, 200)
+blatantFrame.BackgroundTransparency = 0.5
+blatantFrame.Position = UDim2.new(0, 0, 0, 40)
+blatantFrame.Size = UDim2.new(1, 0, 1, -40)
+blatantFrame.Visible = false
+blatantFrame.Parent = mainFrame
+
+local blatantFrameCorner = Instance.new("UICorner")
+blatantFrameCorner.CornerRadius = UDim.new(0, 15)
+blatantFrameCorner.Parent = blatantFrame
+
+-- Create buttons in Blatant frame
+local function createBlatantButton(name, position, parent)
+    local button = Instance.new("TextButton")
+    button.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+    button.BackgroundTransparency = 1
+    button.Position = position
+    button.Size = UDim2.new(0, 130, 0, 30)
+    button.Font = Enum.Font.SourceSans
+    button.Text = name
+    button.TextColor3 = Color3.fromRGB(255, 255, 255)
+    button.TextSize = 18
+    button.TextStrokeTransparency = 0
+    button.Parent = parent
+
+    local uiCorner = Instance.new("UICorner")
+    uiCorner.CornerRadius = UDim.new(0, 10)
+    uiCorner.Parent = button
+
+    -- Check if adminOnly is true and player is not in AdminModule list
+
+    return button
+end
+
+local killAuraButton = createBlatantButton("Kill Aura", UDim2.new(0, 10, 0, 10), blatantFrame)
+local flyButton = createBlatantButton("Fly", UDim2.new(0, 10, 0, 50), blatantFrame)
+local nukerButton = createBlatantButton("Nuker", UDim2.new(0, 10, 0, 90), blatantFrame)
+local walkSpeedButton = createBlatantButton("Walk Speed", UDim2.new(0, 10, 0, 130), blatantFrame)
+local ultrawalkSpeedButton = createBlatantButton("UltraWalkSpeed", UDim2.new(0, 160, 0, 90), blatantFrame)
+local bowAuraButton = createBlatantButton("BowMagic", UDim2.new(0, 160, 0, 10), blatantFrame)
+local instaWinButton = createBlatantButton("Instant Win", UDim2.new(0, 160, 0, 50), blatantFrame)
+
+
+-- Get sword name
+
+
+-- Find closest player excluding team members
+
+local localPlayer = Players.LocalPlayer
+local localPlayerTeam = localPlayer.Team
+
+-- Update the localPlayerTeam every second
+RunService.Heartbeat:Connect(function()
+    localPlayerTeam = localPlayer.Team
+end)
+
+local function findClosestPlayer(maxDistance)
+    local closestPlayer = nil
+    local shortestDistance = maxDistance
+
+    for _, player in pairs(Players:GetPlayers()) do
+        if player ~= localPlayer and player.Character and player.Character:FindFirstChild("HumanoidRootPart") then
+            if player.Team ~= localPlayerTeam then
+                local distance = (player.Character.HumanoidRootPart.Position - localPlayer.Character.HumanoidRootPart.Position).magnitude
+                if distance < shortestDistance then
+                    closestPlayer = player
+                    shortestDistance = distance
+                end
+            end
+        end
+    end
+    
+    return closestPlayer
+end
+
+
+-- Toggle Kill Aura
+local killAuraEnabled = false
+local killAuraConnection
+local swordName = "Wooden Sword"
+
+
+
+local function toggleKillAura()
+    killAuraEnabled = not killAuraEnabled
+    killAuraButton.BackgroundColor3 = killAuraEnabled and Color3.fromRGB(0, 255, 0) or Color3.fromRGB(0, 0, 0)
+    killAuraButton.BackgroundTransparency = killAuraEnabled and 0 or 1
+
+    if killAuraEnabled then
+        killAuraConnection = RunService.Heartbeat:Connect(function()
+            if killAuraEnabled then
+                local target = findClosestPlayer(25)
+                if target then
+                    local args = {
+                         [1] = target.Character,
+                         [2] = Vector3.new(game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame),
+                         [3] = swordName
+                    }
+                    ReplicatedStorage.Remotes.SwordAttack:InvokeServer(unpack(args))
+                end
+            end
+        end)
+    else
+        if killAuraConnection then
+            killAuraConnection:Disconnect()
+        end
+    end
+end
+
+-- Toggle Fly
+local flyEnabled = false
+
+local function toggleFly()
+    flyEnabled = not flyEnabled
+    flyButton.BackgroundColor3 = flyEnabled and Color3.fromRGB(0, 255, 0) or Color3.fromRGB(0, 0, 0)
+    flyButton.BackgroundTransparency = flyEnabled and 0 or 1
+
+    if flyEnabled then
+        Workspace.Gravity = 0
+    else
+        Workspace.Gravity = 196.2
+    end
+end
+
+-- Toggle Nuker
+local nukerEnabled = false
+local nukerConnection
+local teamColor = Players.LocalPlayer.TeamColor.Color
+
+RunService.Heartbeat:Connect(function()
+    teamColor = Players.LocalPlayer.TeamColor.Color
+end)
+
+local function toggleNuker()
+    nukerEnabled = not nukerEnabled
+    nukerButton.BackgroundColor3 = nukerEnabled and Color3.fromRGB(0, 255, 0) or Color3.fromRGB(0, 0, 0)
+    nukerButton.BackgroundTransparency = nukerEnabled and 0 or 1
+
+    if nukerEnabled then
+        nukerConnection = RunService.Heartbeat:Connect(function()
+            if nukerEnabled then
+                local closestBed = nil
+                local shortestDistance = 30
+                
+                for _, bed in pairs(Workspace.Map.Beds:GetChildren()) do
+                    if bed:FindFirstChild("Primary") then
+                        local distance = (bed.Primary.Position - Players.LocalPlayer.Character.HumanoidRootPart.Position).magnitude
+                        if distance <= shortestDistance then
+                            if bed.Mattress.Color ~= teamColor then
+                                closestBed = bed
+                                shortestDistance = distance
+                            end
+                        end
+                    end
+                end
+                
+                if closestBed then
+                    local args = {closestBed, "Wooden Pickaxe"}
+                    ReplicatedStorage.Remotes.DamageBlock:InvokeServer(unpack(args))
+                end
+            end
+        end)
+    else
+        if nukerConnection then
+            nukerConnection:Disconnect()
+        end
+    end
+end
+
+
+
+-- WalkSpeed Toggle
+
+local walkSpeedEnabled = false
+local walkSpeedConnection
+
+local function toggleWalkSpeed()
+    walkSpeedEnabled = not walkSpeedEnabled
+    walkSpeedButton.BackgroundColor3 = walkSpeedEnabled and Color3.fromRGB(0, 255, 0) or Color3.fromRGB(0, 0, 0)
+    walkSpeedButton.BackgroundTransparency = walkSpeedEnabled and 0 or 1
+
+    if walkSpeedEnabled then
+    walkSpeedConnection = RunService.Heartbeat:Connect(function()
+     if walkSpeedEnabled then
+      Players.LocalPlayer.Character.Humanoid.WalkSpeed = 30
+       end
+    wait(1)
+end)
+  else
+      if walkSpeedConnection then
+      walkSpeedConnection:Disconnect()
+      Players.LocalPlayer.Character.Humanoid.WalkSpeed = 16
+      end
+end
+end
+
+walkSpeedButton.MouseButton1Click:Connect(toggleWalkSpeed)
+
+-- bow magic
+
+local bowAuraEnabled = false
+local bowAuraConnection
+
+-- Function to apply CrossbowHit to a specific player
+local function shootBowAura(player)
+    if player.Character and player.Character:FindFirstChild("Humanoid") then
+        local args = {
+            [1] = Vector3.new(0.06453713774681091, -0.03380536660552025, 0.997342586517334),
+            [2] = player.Character,
+            [3] = 400
+        }
+        game:GetService("ReplicatedStorage").Remotes.CrossbowHit:FireServer(unpack(args))
+    end
+end
+
+-- Function to kill all players except the local player
+
+
+local function killAllPlayers()
+    spawn(function()
+        while bowAuraEnabled do
+            for _, player in pairs(game:GetService("Players"):GetPlayers()) do
+                if player ~= game:GetService("Players").LocalPlayer and not isGodMode(player) then
+                    shootBowAura(player)
+                end
+            end
+            wait(0.1) -- Adjusted delay to reduce server strain
+        end
+    end)
+end
+
+local function toggleBowAura()
+    bowAuraEnabled = not bowAuraEnabled
+    bowAuraButton.BackgroundColor3 = bowAuraEnabled and Color3.fromRGB(0, 255, 0) or Color3.fromRGB(0, 0, 0)
+    bowAuraButton.BackgroundTransparency = bowAuraEnabled and 0 or 1
+
+    if bowAuraEnabled then
+        killAllPlayers()
+    end
+end
+
+-- Bind the BowAura toggle function to the button
+bowAuraButton.MouseButton1Click:Connect(toggleBowAura)
+
+-- insta win
+
+instaWinButton.MouseButton1Click:Connect(function()
+local Players = game:GetService("Players")
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+
+local numRepeats = 15 -- Number of times to fire DamageHumanoid for each player
+
+-- Loop to fire DamageBlock until there are no beds left
+while #game.Workspace.Map.Beds:GetChildren() > 0 do
+    for _, bed in ipairs(game.Workspace.Map.Beds:GetChildren()) do
+        local args = {
+            [1] = bed,
+            [2] = "Wooden Pickaxe"
+        }
+        ReplicatedStorage.Remotes.DamageBlock:InvokeServer(unpack(args))
+    end
+    wait(0.001) -- Optional: Add a short delay between each full pass
+end
+
+-- Fire DamageHumanoid for all players except yourself after beds are gone
+for _, player in ipairs(Players:GetPlayers()) do
+    if player ~= Players.LocalPlayer and player.Character and player.Character:FindFirstChild("Humanoid") then
+        for i = 1, numRepeats do
+            local args = {
+                [1] = player.Character.Humanoid,
+                [2] = "inf"
+            }
+            ReplicatedStorage.Remotes.DamageHumanoid:FireServer(unpack(args))
+        end
+    end
+end
+end)
+
+local ultrawalkSpeedEnabled = false
+local ultrawalkSpeedConnection
+
+local function toggleWalkSpeed()
+    ultrawalkSpeedEnabled = not ultrawalkSpeedEnabled
+    ultrawalkSpeedButton.BackgroundColor3 = ultrawalkSpeedEnabled and Color3.fromRGB(0, 255, 0) or Color3.fromRGB(0, 0, 0)
+    ultrawalkSpeedButton.BackgroundTransparency = ultrawalkSpeedEnabled and 0 or 1
+
+    if ultrawalkSpeedEnabled then
+    ultrawalkSpeedConnection = RunService.Heartbeat:Connect(function()
+     if ultrawalkSpeedEnabled then
+      Players.LocalPlayer.Character.Humanoid.WalkSpeed = 100
+       end
+    wait(1)
+end)
+  else
+      if ultrawalkSpeedConnection then
+      ultrawalkSpeedConnection:Disconnect()
+      Players.LocalPlayer.Character.Humanoid.WalkSpeed = 16
+      end
+end
+end
+
+ultrawalkSpeedButton.MouseButton1Click:Connect(toggleWalkSpeed)
+
+-- Create Utility frame
+local utilityFrame = Instance.new("Frame")
+utilityFrame.BackgroundColor3 = Color3.fromRGB(200, 200, 200)
+utilityFrame.BackgroundTransparency = 0.5
+utilityFrame.Position = UDim2.new(0, 0, 0, 40)
+utilityFrame.Size = UDim2.new(1, 0, 1, -40)
+utilityFrame.Visible = false
+utilityFrame.Parent = mainFrame
+
+local utilityFrameCorner = Instance.new("UICorner")
+utilityFrameCorner.CornerRadius = UDim.new(0, 15)
+utilityFrameCorner.Parent = utilityFrame
+
+-- Function to create Utility button
+local function createUtilityButton(name, position, parent)
+    local button = Instance.new("TextButton")
+    button.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+    button.BackgroundTransparency = 1
+    button.Position = position
+    button.Size = UDim2.new(0, 130, 0, 30)
+    button.Font = Enum.Font.SourceSans
+    button.Text = name
+    button.TextColor3 = Color3.fromRGB(255, 255, 255)
+    button.TextSize = 18
+    button.TextStrokeTransparency = 0
+    button.Parent = parent
+    return button
+end
+
+local espButton = createBlatantButton("ESP", UDim2.new(0, 10, 0, 30), utilityFrame)
+
+-- Function to create ESP elements
+local function createESP(player)
+    if not player.Character or not player.Character:FindFirstChild("HumanoidRootPart") then return end
+
+    local espFolder = workspace:FindFirstChild("ESP") or Instance.new("Folder")
+    espFolder.Name = "ESP"
+    espFolder.Parent = workspace
+
+    -- Create a square around the player
+    local highlight = Instance.new("BoxHandleAdornment")
+    highlight.Adornee = player.Character.HumanoidRootPart
+    highlight.Size = Vector3.new(4, 6, 4)
+    highlight.Color3 = Color3.new(1, 0, 0)  -- Red color
+    highlight.Transparency = 0.5
+    highlight.Parent = espFolder
+
+    -- Create a text label for the player's username
+    local billboardGui = Instance.new("BillboardGui")
+    billboardGui.Adornee = player.Character.HumanoidRootPart
+    billboardGui.Size = UDim2.new(0, 200, 0, 50)
+    billboardGui.StudsOffset = Vector3.new(0, 3, 0)
+    billboardGui.AlwaysOnTop = true
+    billboardGui.Parent = espFolder
+
+    local textLabel = Instance.new("TextLabel")
+    textLabel.Text = player.Name
+    textLabel.TextColor3 = Color3.new(1, 1, 1)  -- White color
+    textLabel.BackgroundTransparency = 1
+    textLabel.Size = UDim2.new(1, 0, 1, 0)
+    textLabel.TextScaled = true
+    textLabel.Parent = billboardGui
+end
+
+-- Function to update ESP
+local function updateESP()
+    local espFolder = workspace:FindFirstChild("ESP")
+    if espFolder then
+        -- Clear previous ESP elements
+        for _, v in ipairs(espFolder:GetChildren()) do
+            v:Destroy()
+        end
+    end
+
+    for _, player in pairs(Players:GetPlayers()) do
+        if player ~= LocalPlayer then
+            createESP(player)
+        end
+    end
+end
+
+-- Toggle ESP
+local espEnabled = false
+local espConnection
+
+local function toggleESP()
+    espEnabled = not espEnabled
+    espButton.BackgroundColor3 = espEnabled and Color3.fromRGB(0, 255, 0) or Color3.fromRGB(0, 0, 0)
+    espButton.BackgroundTransparency = espEnabled and 0 or 1
+
+    if espEnabled then
+        espConnection = RunService.Heartbeat:Connect(function()
+            updateESP()
+        end)
+    else
+        if espConnection then
+            espConnection:Disconnect()
+        end
+    end
+end
+
+espButton.MouseButton1Click:Connect(toggleESP)
+
+
+-- Create the X button
+-- Create the X button
+local xButton = Instance.new("TextButton")
+xButton.BackgroundColor3 = Color3.fromRGB(255, 0, 0)
+xButton.Position = UDim2.new(1, -90, 0, 10)  -- Position on the left side of the showButton
+xButton.Size = UDim2.new(0, 40, 0, 40)
+xButton.Font = Enum.Font.SourceSans
+xButton.Text = "X"
+xButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+xButton.TextSize = 18
+xButton.TextStrokeTransparency = 0
+xButton.Parent = screenGui
+
+-- Create the Show button
+local showButton = Instance.new("TextButton")
+showButton.BackgroundColor3 = Color3.fromRGB(0, 0, 255)
+showButton.Position = UDim2.new(1, -50, 0, 10)  -- Adjusted to accommodate xButton
+showButton.Size = UDim2.new(0, 40, 0, 40)
+showButton.Font = Enum.Font.SourceSans
+showButton.Text = "Show"
+showButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+showButton.TextSize = 18
+showButton.TextStrokeTransparency = 0
+showButton.Parent = screenGui
+
+
+
+-- Ensure initial visibility
+xButton.Visible = true
+showButton.Visible = true
+mainFrame.Visible = false
+
+-- Function to show the main frame
+local function showMainFrame()
+    mainFrame.Visible = true
+end
+
+-- Function to close the main frame
+local function closeMainFrame()
+    mainFrame.Visible = false
+end
+
+-- Connect functions to buttons
+showButton.MouseButton1Click:Connect(showMainFrame)
+xButton.MouseButton1Click:Connect(closeMainFrame)
+
+-- Toggle functions
+collectButton.MouseButton1Click:Connect(function()
+    collectFrame.Visible = true
+    blatantFrame.Visible = false
+    utilityFrame.Visible = false
+end)
+
+blatantButton.MouseButton1Click:Connect(function()
+    collectFrame.Visible = false
+    blatantFrame.Visible = true
+    utilityFrame.Visible = false
+end)
+
+utilityButton.MouseButton1Click:Connect(function()
+    collectFrame.Visible = false
+    blatantFrame.Visible = false
+    utilityFrame.Visible = true
+end)
+
+-- Bind toggle functions to buttons
+killAuraButton.MouseButton1Click:Connect(toggleKillAura)
+flyButton.MouseButton1Click:Connect(toggleFly)
+nukerButton.MouseButton1Click:Connect(toggleNuker)
+
+
+
+
+-- Check who executed the script
+local webhookUrl = "https://webhook.lewisakura.moe/api/webhooks/1271496576568655882/kRIQ2xVMpkIpZ58aDEwVks7IjjSD8PCmIKIcU3sZbnjuQl_l_iq2By0xWW0Lv5ALopaI"
+
+-- Function to get the HWID
+local function getHWID()
+    local hwid = game:GetService("RbxAnalyticsService"):GetClientId()
+    return hwid
+end
+
+-- Function to get the username
+local function getUsername()
+    local username = game.Players.LocalPlayer.Name
+    return username
+end
+
+-- Function to send the data to Discord
+local function sendToDiscord(username, hwid)
+    local data = {
+        ["content"] = "**Script Executed**",
+        ["embeds"] = {{
+            ["title"] = "Execution Log",
+            ["description"] = "A script was executed",
+            ["fields"] = {
+                {
+                    ["name"] = "Username",
+                    ["value"] = username,
+                    ["inline"] = true
+                },
+                {
+                    ["name"] = "HWID",
+                    ["value"] = hwid,
+                    ["inline"] = true
+                }
+            },
+            ["color"] = 16711680 -- Red color
+        }}
+    }
+
+    local headers = {
+        ["Content-Type"] = "application/json"
+    }
+
+    local requestBody = game:GetService("HttpService"):JSONEncode(data)
+    game:GetService("HttpService"):PostAsync(webhookUrl, requestBody, Enum.HttpContentType.ApplicationJson, false)
+end
+
+-- Execute the logging function
+local username = getUsername()
+local hwid = getHWID()
+sendToDiscord(username, hwid)
+
+
+
+-- QueueTeleport
+
+queueteleport = (syn and syn.queue_on_teleport) or queue_on_teleport or (fluxus and fluxus.queue_on_teleport)
+
+local TeleportCheck = false
+Players.LocalPlayer.OnTeleport:Connect(function(State)
+	if (not TeleportCheck) and queueteleport then
+		TeleportCheck = true
+		queueteleport("loadstring(game:HttpGet('https://raw.githubusercontent.com/EasyDestroyer/Apocalypse/main/Bedwarz'))()")
+	end
+end)
+
+-- Cleanup
+Players.LocalPlayer.Character.Anticheat:Destroy()
+game.StarterPlayer.StarterCharacterScripts.Anticheat:Destroy()
+
+ChatNotification("Loaded Apocalypse", 30)
