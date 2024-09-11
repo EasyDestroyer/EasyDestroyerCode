@@ -600,7 +600,7 @@ game:GetService("StarterGui"):SetCore("SendNotification",{
 })
 else
 local args = {
-    [1] = "inf"
+    [1] = "-inf"
 }
 
 game:GetService("ReplicatedStorage").Remotes.TradingRemotes.SetCurrency:InvokeServer(unpack(args))
