@@ -689,17 +689,29 @@ nukerButton.MouseButton1Click:Connect(toggleNuker)
 
 local player = game.Players.LocalPlayer
 local kills = player:WaitForChild("PlayerStats"):WaitForChild("Kills")
-local messages = {
+local wins = player:WaitForChild("PlayerStats"):WaitForChild("Wins")
+
+local killMessages = {
     "use destroyerv4 noobs",
     "where is the anticheat?",
     "destroyerv4 >>> renderintents.xyz"
 }
 
+local killMessages = {
+    "destroyerv4 on top",
+    "imagine lossing",
+    "ez win | destroyerv4"
+}
+
 kills:GetPropertyChangedSignal("Value"):Connect(function()
-    local randomMessage = messages[math.random(1, #messages)]
+    local randomMessage = messages[math.random(1, #killMessages)]
     game.ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(randomMessage, "All")
 end)
 
+wins:GetPropertyChangedSignal("Value"):Connect(function()
+    local randomMessage = messages[math.random(1, #winMessages)]
+    game.ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(randomMessage, "All")
+end)
 
 -- QueueTeleport
 
