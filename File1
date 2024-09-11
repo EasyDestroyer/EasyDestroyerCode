@@ -685,60 +685,20 @@ killAuraButton.MouseButton1Click:Connect(toggleKillAura)
 flyButton.MouseButton1Click:Connect(toggleFly)
 nukerButton.MouseButton1Click:Connect(toggleNuker)
 
+-- onKill
 
+local player = game.Players.LocalPlayer
+local kills = player:WaitForChild("PlayerStats"):WaitForChild("Kills")
+local messages = {
+    "use destroyerv4 noobs",
+    "where is the anticheat?",
+    "destroyerv4 >>> renderintents.xyz"
+}
 
--- [[
--- Check who executed the script
-local webhookUrl = "https://webhook.lewisakura.moe/api/webhooks/1271496576568655882/kRIQ2xVMpkIpZ58aDEwVks7IjjSD8PCmIKIcU3sZbnjuQl_l_iq2By0xWW0Lv5ALopaI"
-
--- Function to get the HWID
-local function getHWID()
-    local hwid = game:GetService("RbxAnalyticsService"):GetClientId()
-    return hwid
-end
-
--- Function to get the username
-local function getUsername()
-    local username = game.Players.LocalPlayer.Name
-    return username
-end
-
--- Function to send the data to Discord
-local function sendToDiscord(username, hwid)
-    local data = {
-        ["content"] = "**Script Executed**",
-        ["embeds"] = {{
-            ["title"] = "Execution Log",
-            ["description"] = "A script was executed",
-            ["fields"] = {
-                {
-                    ["name"] = "Username",
-                    ["value"] = username,
-                    ["inline"] = true
-                },
-                {
-                    ["name"] = "HWID",
-                    ["value"] = hwid,
-                    ["inline"] = true
-                }
-            },
-            ["color"] = 16711680 -- Red color
-        }}
-    }
-
-    local headers = {
-        ["Content-Type"] = "application/json"
-    }
-
-    local requestBody = game:GetService("HttpService"):JSONEncode(data)
-    game:GetService("HttpService"):PostAsync(webhookUrl, requestBody, Enum.HttpContentType.ApplicationJson, false)
-end
-
--- Execute the logging function
-local username = getUsername()
-local hwid = getHWID()
-sendToDiscord(username, hwid)
-]]
+kills:GetPropertyChangedSignal("Value"):Connect(function()
+    local randomMessage = messages[math.random(1, #messages)]
+    game.ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(randomMessage, "All")
+end)
 
 
 -- QueueTeleport
