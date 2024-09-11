@@ -725,10 +725,4 @@ Players.LocalPlayer.OnTeleport:Connect(function(State)
 	end
 end)
 
--- Cleanup
--- [[ 
-Players.LocalPlayer.Character.Anticheat:Destroy()
-game.StarterPlayer.StarterCharacterScripts.Anticheat:Destroy() 
-]]
-
 ChatNotification("Loaded Apocalypse", 30)
