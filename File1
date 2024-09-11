@@ -1,13 +1,4 @@
--- [[
-game:GetService("StarterGui"):SetCore("SendNotification",{
-	Title = "Shutdown", 
-	Text = "In development. New features will be added soon.",
-	Duration = 10
-})
 
-return
-end
-]]
 
 -- [[
 local messages = {
