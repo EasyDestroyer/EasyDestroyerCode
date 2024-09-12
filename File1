@@ -511,7 +511,7 @@ ultrawalkSpeedButton.MouseButton1Click:Connect(toggleWalkSpeed)
 local player = game.Players.LocalPlayer
 local character = player.Character or player.CharacterAdded:Wait()
 local teamColor = player.TeamColor
-local spectatorTeam = game.Teams:FindFirstChild("Spectator") -- Assuming there is a "Spectator" team
+local spectatorTeam = game.Teams:FindFirstChild("Spectator") 
 local teleporting = false 
 
 local bedsFolder = game.Workspace.Map.Beds
@@ -532,17 +532,16 @@ local function toggleTeleport()
     autoWin.BackgroundColor3 = teleporting and Color3.fromRGB(0, 255, 0) or Color3.fromRGB(0, 0, 0)
     autoWin.BackgroundTransparency = teleporting and 0 or 1
     if teleporting then
-        -- Teleport to all beds first
+        
         for _, bed in pairs(bedsFolder:GetChildren()) do
-            if not teleporting then return end -- Stop if toggled off
+            if not teleporting then return end 
             local mattress = bed:FindFirstChild("Mattress")
             if mattress and mattress.BrickColor ~= teamColor then
                 teleportTo(mattress.CFrame)
-                wait(0.5) -- Wait 0.5 seconds before teleporting to the next bed
-            end
+                wait(4) 
+           end
         end
 
-        -- Teleport to every player except those in Spectator or your team
         for _, otherPlayer in pairs(game.Players:GetPlayers()) do
             if not teleporting then return end -- Stop if toggled off
             if otherPlayer ~= player and otherPlayer.TeamColor ~= teamColor and otherPlayer.Team ~= spectatorTeam then
@@ -550,8 +549,8 @@ local function toggleTeleport()
                 if otherCharacter and otherCharacter:FindFirstChild("HumanoidRootPart") then
                     repeat
                         teleportTo(otherCharacter.HumanoidRootPart.CFrame)
-                        wait(0.5) -- Teleport every 0.5 seconds
-                    until not teleporting or isPlayerDead(otherCharacter) -- Stop or wait for player death
+                        wait(0.5) 
+                    until not teleporting or isPlayerDead(otherCharacter) 
                 end
             end
         end
