@@ -217,7 +217,7 @@ local killAuraButton = createBlatantButton("Kill Aura", UDim2.new(0, 10, 0, 10),
 local flyButton = createBlatantButton("Fly", UDim2.new(0, 10, 0, 50), blatantFrame)
 local nukerButton = createBlatantButton("Nuker", UDim2.new(0, 10, 0, 90), blatantFrame)
 local walkSpeedButton = createBlatantButton("Walk Speed", UDim2.new(0, 10, 0, 130), blatantFrame)
-local ultrawalkSpeedButton = createBlatantButton("UltraWalkSpeed", UDim2.new(0, 160, 0, 90), blatantFrame)
+local ultrawalkSpeedButton = createBlatantButton("UltraWalkSpeed", UDim2.new(0, 160, 0, 10), blatantFrame)
 
 
 -- Get sword name
