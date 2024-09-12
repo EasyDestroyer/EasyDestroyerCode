@@ -218,7 +218,7 @@ local flyButton = createBlatantButton("Fly", UDim2.new(0, 10, 0, 50), blatantFra
 local nukerButton = createBlatantButton("Nuker", UDim2.new(0, 10, 0, 90), blatantFrame)
 local walkSpeedButton = createBlatantButton("Walk Speed", UDim2.new(0, 10, 0, 130), blatantFrame)
 local ultrawalkSpeedButton = createBlatantButton("UltraWalkSpeed", UDim2.new(0, 160, 0, 10), blatantFrame)
-
+local autoWin = createBlatantButton("autoWin", UDim2.new(0, 160, 0, 50), blatantFrame)
 
 -- Get sword name
 
@@ -505,6 +505,62 @@ end
 end
 
 ultrawalkSpeedButton.MouseButton1Click:Connect(toggleWalkSpeed)
+
+-- autowin
+
+local player = game.Players.LocalPlayer
+local character = player.Character or player.CharacterAdded:Wait()
+local teamColor = player.TeamColor
+local spectatorTeam = game.Teams:FindFirstChild("Spectator") -- Assuming there is a "Spectator" team
+local teleporting = false 
+
+local bedsFolder = game.Workspace.Map.Beds
+
+local function teleportTo(cframe)
+    character.HumanoidRootPart.CFrame = cframe + Vector3.new(0, 3, 0)
+end
+
+
+local function isPlayerDead(otherCharacter)
+    local humanoid = otherCharacter:FindFirstChild("Humanoid")
+    return humanoid and humanoid.Health <= 0
+end
+
+
+local function toggleTeleport()
+    teleporting = not teleporting 
+    autoWin.BackgroundColor3 = teleporting and Color3.fromRGB(0, 255, 0) or Color3.fromRGB(0, 0, 0)
+    autoWin.BackgroundTransparency = teleporting and 0 or 1
+    if teleporting then
+        -- Teleport to all beds first
+        for _, bed in pairs(bedsFolder:GetChildren()) do
+            if not teleporting then return end -- Stop if toggled off
+            local mattress = bed:FindFirstChild("Mattress")
+            if mattress and mattress.BrickColor ~= teamColor then
+                teleportTo(mattress.CFrame)
+                wait(0.5) -- Wait 0.5 seconds before teleporting to the next bed
+            end
+        end
+
+        -- Teleport to every player except those in Spectator or your team
+        for _, otherPlayer in pairs(game.Players:GetPlayers()) do
+            if not teleporting then return end -- Stop if toggled off
+            if otherPlayer ~= player and otherPlayer.TeamColor ~= teamColor and otherPlayer.Team ~= spectatorTeam then
+                local otherCharacter = otherPlayer.Character
+                if otherCharacter and otherCharacter:FindFirstChild("HumanoidRootPart") then
+                    repeat
+                        teleportTo(otherCharacter.HumanoidRootPart.CFrame)
+                        wait(0.5) -- Teleport every 0.5 seconds
+                    until not teleporting or isPlayerDead(otherCharacter) -- Stop or wait for player death
+                end
+            end
+        end
+    end
+end
+
+autoWin.MouseButton1Click:Connect(toggleTeleport)
+
+
 
 -- Create Utility frame
 local utilityFrame = Instance.new("Frame")
