@@ -273,9 +273,8 @@ local function toggleKillAura()
                 local target = findClosestPlayer(25)
                 if target then
                     local args = {
-                         [1] = target.Character,
-                         [2] = Vector3.new(game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame),
-                         [3] = swordName
+                         [1] = Vector3.new(game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame),
+                         [2] = swordName
                     }
                     ReplicatedStorage.Remotes.SwordAttack:InvokeServer(unpack(args))
                 end
