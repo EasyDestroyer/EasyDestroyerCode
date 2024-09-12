@@ -260,6 +260,30 @@ local killAuraEnabled = false
 local killAuraConnection
 local swordName = "Wooden Sword"
 
+local player = game.Players.LocalPlayer
+local backpack = player.Backpack
+local swordName = "Wooden Sword"
+
+local function updateSwordName()
+    local swords = {
+        ["Stone Sword"] = "Stone Sword",
+        ["Diamond Sword"] = "Diamond Sword",
+        ["Iron Sword"] = "Iron Sword",
+        ["Emerald Sword"] = "Emerald Sword"
+    }
+
+    for _, item in pairs(backpack:GetChildren()) do
+        if swords[item.Name] and item.Name ~= swordName then
+            swordName = swords[item.Name]
+            print("Sword name updated to: " .. swordName)
+        end
+    end
+end
+
+while true do
+    updateSwordName()
+    wait(1)
+end
 
 
 local function toggleKillAura()
