@@ -218,8 +218,6 @@ local flyButton = createBlatantButton("Fly", UDim2.new(0, 10, 0, 50), blatantFra
 local nukerButton = createBlatantButton("Nuker", UDim2.new(0, 10, 0, 90), blatantFrame)
 local walkSpeedButton = createBlatantButton("Walk Speed", UDim2.new(0, 10, 0, 130), blatantFrame)
 local ultrawalkSpeedButton = createBlatantButton("UltraWalkSpeed", UDim2.new(0, 160, 0, 90), blatantFrame)
-local bowAuraButton = createBlatantButton("BowMagic", UDim2.new(0, 160, 0, 10), blatantFrame)
-local instaWinButton = createBlatantButton("Instant Win", UDim2.new(0, 160, 0, 50), blatantFrame)
 
 
 -- Get sword name
@@ -258,6 +256,7 @@ end
 -- Toggle Kill Aura
 local killAuraEnabled = false
 local killAuraConnection
+
 
 local player = game.Players.LocalPlayer
 local backpack = player.Backpack
@@ -400,7 +399,7 @@ end
 walkSpeedButton.MouseButton1Click:Connect(toggleWalkSpeed)
 
 -- bow magic
-
+-- [[
 local bowAuraEnabled = false
 local bowAuraConnection
 
@@ -444,7 +443,9 @@ end
 
 -- Bind the BowAura toggle function to the button
 bowAuraButton.MouseButton1Click:Connect(toggleBowAura)
+]]
 
+-- [[
 -- insta win
 
 instaWinButton.MouseButton1Click:Connect(function()
@@ -478,6 +479,7 @@ for _, player in ipairs(Players:GetPlayers()) do
     end
 end
 end)
+]]
 
 local ultrawalkSpeedEnabled = false
 local ultrawalkSpeedConnection
