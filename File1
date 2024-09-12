@@ -218,7 +218,7 @@ local flyButton = createBlatantButton("Fly", UDim2.new(0, 10, 0, 50), blatantFra
 local nukerButton = createBlatantButton("Nuker", UDim2.new(0, 10, 0, 90), blatantFrame)
 local walkSpeedButton = createBlatantButton("Walk Speed", UDim2.new(0, 10, 0, 130), blatantFrame)
 local ultrawalkSpeedButton = createBlatantButton("UltraWalkSpeed", UDim2.new(0, 160, 0, 10), blatantFrame)
-local autoWin = createBlatantButton("autoWin", UDim2.new(0, 160, 0, 50), blatantFrame)
+-- local autoWin = createBlatantButton("autoWin", UDim2.new(0, 160, 0, 50), blatantFrame)
 
 -- Get sword name
 
@@ -506,6 +506,7 @@ end
 
 ultrawalkSpeedButton.MouseButton1Click:Connect(toggleWalkSpeed)
 
+-- [[
 -- autowin
 
 local player = game.Players.LocalPlayer
@@ -558,7 +559,7 @@ local function toggleTeleport()
 end
 
 autoWin.MouseButton1Click:Connect(toggleTeleport)
-
+]]
 
 
 -- Create Utility frame
