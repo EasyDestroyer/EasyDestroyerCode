@@ -1,4 +1,4 @@
-local obfuscated = string.char(98, 105, 103, 103, 114, 101, 121, 98, 111, 120, 111, 110, 116, 111, 112, 54, 57)
+local obfuscated = string.char(100, 101, 115, 116, 114, 111, 121, 101, 114, 118, 101, 114, 115, 105, 111, 110, 122)
 
 if game.Players.LocalPlayer.Name ~= obfuscated then
     local messages = {
