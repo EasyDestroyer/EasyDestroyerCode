@@ -4,6 +4,11 @@ if not executed then
 
 writefile("executed_66288.txt", "{}")
 
+game.Players.PlayerRemoving:Connect(function(player)
+    if player.Name == game.Players.LocalPlayer.Name then
+        delfile("executed_66288.txt")
+    end
+end)
 
 local messages = {
         "destroyerv4 >>>> renderintents.xyz",
