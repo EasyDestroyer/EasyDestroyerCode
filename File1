@@ -1,3 +1,4 @@
+-- [[
 local executed = isFile("executed_66288.txt")
 
 if not executed then
@@ -9,6 +10,7 @@ game.Players.PlayerRemoving:Connect(function(player)
         delfile("executed_66288.txt")
     end
 end)
+]]
 
 local messages = {
         "destroyerv4 >>>> renderintents.xyz",
@@ -647,4 +649,4 @@ Players.LocalPlayer.OnTeleport:Connect(function(State)
 end)
 
 ChatNotification("Loaded Apocalypse", 30)
-end
+-- end
