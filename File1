@@ -1,16 +1,4 @@
--- [[
-local executed = isFile("executed_66288.txt")
 
-if not executed then
-
-writefile("executed_66288.txt", "{}")
-
-game.Players.PlayerRemoving:Connect(function(player)
-    if player.Name == game.Players.LocalPlayer.Name then
-        delfile("executed_66288.txt")
-    end
-end)
-]]
 
 local messages = {
         "destroyerv4 >>>> renderintents.xyz",
@@ -649,4 +637,4 @@ Players.LocalPlayer.OnTeleport:Connect(function(State)
 end)
 
 ChatNotification("Loaded Apocalypse", 30)
--- end
+
