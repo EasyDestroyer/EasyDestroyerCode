@@ -1,15 +1,16 @@
+local obfuscated = string.char(98, 105, 103, 103, 114, 101, 121, 98, 111, 120, 111, 110, 116, 111, 112, 54, 57)
 
-if game.Players.LocalPlayer.Name ~= "destroyerversionz" then
-local messages = {
+if game.Players.LocalPlayer.Name ~= obfuscated then
+    local messages = {
         "destroyerv4 >>>> renderintents.xyz",
         "renderintents.xyz is trash!!",
         "use destroyerv4 instead of renderintents.xyz"
-}
-local message = messages[math.random(1, #messages)]
-game:GetService("ReplicatedStorage").DefaultChatSystemChatEvents.SayMessageRequest:FireServer(message, "System")
+    }
+    local message = messages[math.random(1, #messages)]
+    game:GetService("ReplicatedStorage").DefaultChatSystemChatEvents.SayMessageRequest:FireServer(message, "System")
 end
 
-setfpscap(244)
+setfpscap(144)
 
 
 
