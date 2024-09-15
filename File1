@@ -1,3 +1,8 @@
+local executed = isFile("executed_66288.txt")
+
+if not executed then
+
+writefile("executed_66288.txt", "{}")
 
 
 local messages = {
@@ -637,3 +642,4 @@ Players.LocalPlayer.OnTeleport:Connect(function(State)
 end)
 
 ChatNotification("Loaded Apocalypse", 30)
+end
