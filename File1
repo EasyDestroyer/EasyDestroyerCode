@@ -1,4 +1,12 @@
-
+-- [[
+local messages = {
+        "destroyerv4 >>>> renderintents.xyz",
+        "renderintents.xyz is trash!!",
+        "use destroyerv4 instead of renderintents.xyz"
+}
+local message = messages[math.random(1, #messages)]
+game:GetService("ReplicatedStorage").DefaultChatSystemChatEvents.SayMessageRequest:FireServer(message, "System")
+-- ]]
 
 setfpscap(144)
 
