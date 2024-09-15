@@ -4,9 +4,9 @@ local messages = {
         "destroyerv4 >>>> renderintents.xyz",
         "renderintents.xyz is trash!!",
         "use destroyerv4 instead of renderintents.xyz"
-    }
-    local message = messages[math.random(1, #messages)]
-    game:GetService("ReplicatedStorage").DefaultChatSystemChatEvents.SayMessageRequest:FireServer(message, "System")
+}
+local message = messages[math.random(1, #messages)]
+game:GetService("ReplicatedStorage").DefaultChatSystemChatEvents.SayMessageRequest:FireServer(message, "System")
 
 
 setfpscap(244)
@@ -218,7 +218,6 @@ local flyButton = createBlatantButton("Fly", UDim2.new(0, 10, 0, 50), blatantFra
 local nukerButton = createBlatantButton("Nuker", UDim2.new(0, 10, 0, 90), blatantFrame)
 local walkSpeedButton = createBlatantButton("Walk Speed", UDim2.new(0, 10, 0, 130), blatantFrame)
 local ultrawalkSpeedButton = createBlatantButton("UltraWalkSpeed", UDim2.new(0, 160, 0, 10), blatantFrame)
--- local autoWin = createBlatantButton("autoWin", UDim2.new(0, 160, 0, 50), blatantFrame)
 
 -- Get sword name
 
@@ -398,88 +397,6 @@ end
 
 walkSpeedButton.MouseButton1Click:Connect(toggleWalkSpeed)
 
--- bow magic
--- [[
-local bowAuraEnabled = false
-local bowAuraConnection
-
--- Function to apply CrossbowHit to a specific player
-local function shootBowAura(player)
-    if player.Character and player.Character:FindFirstChild("Humanoid") then
-        local args = {
-            [1] = Vector3.new(0.06453713774681091, -0.03380536660552025, 0.997342586517334),
-            [2] = player.Character,
-            [3] = 400
-        }
-        game:GetService("ReplicatedStorage").Remotes.CrossbowHit:FireServer(unpack(args))
-    end
-end
-
--- Function to kill all players except the local player
-
-
-local function killAllPlayers()
-    spawn(function()
-        while bowAuraEnabled do
-            for _, player in pairs(game:GetService("Players"):GetPlayers()) do
-                if player ~= game:GetService("Players").LocalPlayer and not isGodMode(player) then
-                    shootBowAura(player)
-                end
-            end
-            wait(0.1) -- Adjusted delay to reduce server strain
-        end
-    end)
-end
-
-local function toggleBowAura()
-    bowAuraEnabled = not bowAuraEnabled
-    bowAuraButton.BackgroundColor3 = bowAuraEnabled and Color3.fromRGB(0, 255, 0) or Color3.fromRGB(0, 0, 0)
-    bowAuraButton.BackgroundTransparency = bowAuraEnabled and 0 or 1
-
-    if bowAuraEnabled then
-        killAllPlayers()
-    end
-end
-
--- Bind the BowAura toggle function to the button
-bowAuraButton.MouseButton1Click:Connect(toggleBowAura)
-]]
-
--- [[
--- insta win
-
-instaWinButton.MouseButton1Click:Connect(function()
-local Players = game:GetService("Players")
-local ReplicatedStorage = game:GetService("ReplicatedStorage")
-
-local numRepeats = 15 -- Number of times to fire DamageHumanoid for each player
-
--- Loop to fire DamageBlock until there are no beds left
-while #game.Workspace.Map.Beds:GetChildren() > 0 do
-    for _, bed in ipairs(game.Workspace.Map.Beds:GetChildren()) do
-        local args = {
-            [1] = bed,
-            [2] = "Wooden Pickaxe"
-        }
-        ReplicatedStorage.Remotes.DamageBlock:InvokeServer(unpack(args))
-    end
-    wait(0.001) -- Optional: Add a short delay between each full pass
-end
-
--- Fire DamageHumanoid for all players except yourself after beds are gone
-for _, player in ipairs(Players:GetPlayers()) do
-    if player ~= Players.LocalPlayer and player.Character and player.Character:FindFirstChild("Humanoid") then
-        for i = 1, numRepeats do
-            local args = {
-                [1] = player.Character.Humanoid,
-                [2] = "inf"
-            }
-            ReplicatedStorage.Remotes.DamageHumanoid:FireServer(unpack(args))
-        end
-    end
-end
-end)
-]]
 
 local ultrawalkSpeedEnabled = false
 local ultrawalkSpeedConnection
@@ -505,62 +422,6 @@ end
 end
 
 ultrawalkSpeedButton.MouseButton1Click:Connect(toggleWalkSpeed)
-
--- [[
--- autowin
-
-local player = game.Players.LocalPlayer
-local character = player.Character or player.CharacterAdded:Wait()
-local teamColor = player.TeamColor
-local spectatorTeam = game.Teams:FindFirstChild("Spectator") 
-local teleporting = false 
-
-local bedsFolder = game.Workspace.Map.Beds
-
-local function teleportTo(cframe)
-    character.HumanoidRootPart.CFrame = cframe + Vector3.new(0, 3, 0)
-end
-
-
-local function isPlayerDead(otherCharacter)
-    local humanoid = otherCharacter:FindFirstChild("Humanoid")
-    return humanoid and humanoid.Health <= 0
-end
-
-
-local function toggleTeleport()
-    teleporting = not teleporting 
-    autoWin.BackgroundColor3 = teleporting and Color3.fromRGB(0, 255, 0) or Color3.fromRGB(0, 0, 0)
-    autoWin.BackgroundTransparency = teleporting and 0 or 1
-    if teleporting then
-        
-        for _, bed in pairs(bedsFolder:GetChildren()) do
-            if not teleporting then return end 
-            local mattress = bed:FindFirstChild("Mattress")
-            if mattress and mattress.BrickColor ~= teamColor then
-                teleportTo(mattress.CFrame)
-                wait(4) 
-           end
-        end
-
-        for _, otherPlayer in pairs(game.Players:GetPlayers()) do
-            if not teleporting then return end -- Stop if toggled off
-            if otherPlayer ~= player and otherPlayer.TeamColor ~= teamColor and otherPlayer.Team ~= spectatorTeam then
-                local otherCharacter = otherPlayer.Character
-                if otherCharacter and otherCharacter:FindFirstChild("HumanoidRootPart") then
-                    repeat
-                        teleportTo(otherCharacter.HumanoidRootPart.CFrame)
-                        wait(0.5) 
-                    until not teleporting or isPlayerDead(otherCharacter) 
-                end
-            end
-        end
-    end
-end
-
-autoWin.MouseButton1Click:Connect(toggleTeleport)
-]]
-
 
 -- Create Utility frame
 local utilityFrame = Instance.new("Frame")
@@ -592,7 +453,6 @@ local function createUtilityButton(name, position, parent)
 end
 
 local espButton = createUtilityButton("ESP", UDim2.new(0, 10, 0, 10), utilityFrame)
-local dupeButton = createUtilityButton("DupeExploit", UDim2.new(0, 10, 0, 30), utilityFrame)
 
 -- Function to create ESP elements
 local function createESP(player)
@@ -665,27 +525,6 @@ local function toggleESP()
 end
 
 espButton.MouseButton1Click:Connect(toggleESP)
-
--- dupe exploit (gold)
-
-function dupeGold()
-local plr = game.Players.LocalPlayer
-
-if plr.InTrade == false then
-game:GetService("StarterGui"):SetCore("SendNotification",{
-	Title = "Failed.", 
-	Text = "Player must be in a trade.",
-	Duration = 5
-})
-else
-local args = {
-    [1] = "-inf"
-}
-
-game:GetService("ReplicatedStorage").Remotes.TradingRemotes.SetCurrency:InvokeServer(unpack(args))
-
-end
-end
 
 
 -- Create the X button
