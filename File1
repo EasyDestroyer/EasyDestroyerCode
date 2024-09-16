@@ -85,7 +85,6 @@ local Workspace = game:GetService("Workspace")
 local backpack = Players.LocalPlayer.Backpack
 local LocalPlayer = Players.LocalPlayer
 local godMode = {"Roblox", "VGBCCTrrbite"}
-local Notifications = loadstring(game:HttpGet("https://raw.githubusercontent.com/EasyDestroyer/EasyDestroyerCodes/main/Notifications"))()
 
 -- Create the ScreenGui
 local screenGui = Instance.new("ScreenGui")
@@ -661,7 +660,6 @@ killAuraButton.MouseButton1Click:Connect(toggleKillAura)
 flyButton.MouseButton1Click:Connect(toggleFly)
 nukerButton.MouseButton1Click:Connect(toggleNuker)
 
-Notifications:createNotification("This script was made to blatantly cheat.", 5)
 
 -- onKill
 
