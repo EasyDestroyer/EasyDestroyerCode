@@ -107,7 +107,7 @@ UIListLayout.SortOrder = Enum.SortOrder.LayoutOrder
 UIListLayout.VerticalAlignment = Enum.VerticalAlignment.Bottom -- Stack notifications from bottom to top
 UIListLayout.Padding = UDim.new(0, 10) -- Spacing between notifications
 
-function Notifications:createNotification(text, duration)
+function createNotification(text, duration)
     local Frame = Instance.new("Frame")
     local TextLabel = Instance.new("TextLabel")
     local UICorner = Instance.new("UICorner")
@@ -785,7 +785,7 @@ killAuraButton.MouseButton1Click:Connect(toggleKillAura)
 flyButton.MouseButton1Click:Connect(toggleFly)
 nukerButton.MouseButton1Click:Connect(toggleNuker)
 
-
+createNotification("This script is to blatantly exploit.", 5)
 -- onKill
 
 local player = game.Players.LocalPlayer
