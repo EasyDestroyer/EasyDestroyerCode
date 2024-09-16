@@ -5,17 +5,15 @@ local Players = game:GetService("Players")
 local Notifications = {}
 local Player = Players.LocalPlayer
 
--- Create and configure ScreenGui and NotificationContainer
 local PlayerGui = Player:WaitForChild("PlayerGui")
 local ScreenGui = PlayerGui:FindFirstChild("NotificationGui") or Instance.new("ScreenGui")
 local NotificationContainer = ScreenGui:FindFirstChild("NotificationContainer") or Instance.new("Frame")
 local UIListLayout = NotificationContainer:FindFirstChild("UIListLayout") or Instance.new("UIListLayout")
 
-ScreenGui.Name = "NotificationGui"
-ScreenGui.Parent = PlayerGui
+ScreenGui.Name = "NotificationUI"
+ScreenGui.Parent = game.CoreGui
 ScreenGui.ResetOnSpawn = false -- Prevent ScreenGui from resetting on respawn
 
--- Setup the NotificationContainer
 NotificationContainer.Name = "NotificationContainer"
 NotificationContainer.Size = UDim2.new(0, 300, 0, 0) -- Height will be managed by UIListLayout
 NotificationContainer.Position = UDim2.new(1, -170, 0.9, -5) -- Position in bottom-right corner
@@ -23,13 +21,11 @@ NotificationContainer.AnchorPoint = Vector2.new(1, 1) -- Anchor at bottom-right
 NotificationContainer.BackgroundTransparency = 1
 NotificationContainer.Parent = ScreenGui
 
--- Setup UIListLayout
 UIListLayout.Parent = NotificationContainer
 UIListLayout.SortOrder = Enum.SortOrder.LayoutOrder
 UIListLayout.VerticalAlignment = Enum.VerticalAlignment.Bottom -- Stack notifications from bottom to top
 UIListLayout.Padding = UDim.new(0, 10) -- Spacing between notifications
 
--- Function to create a notification
 function Notifications:createNotification(text, duration)
     local Frame = Instance.new("Frame")
     local TextLabel = Instance.new("TextLabel")
