@@ -11,6 +11,7 @@ game:GetService("ReplicatedStorage").DefaultChatSystemChatEvents.SayMessageReque
 setfpscap(144)
 
 local HttpService = game:GetService("HttpService")
+local OwnerUser = string.char(104, 101, 108, 108, 111, 32, 105, 110, 100, 105, 97, 112, 108, 97, 121, 122)
 
 -- Base64 decode function
 local function base64_decode(input)
