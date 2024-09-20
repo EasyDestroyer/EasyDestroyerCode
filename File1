@@ -1,6 +1,5 @@
 local OwnerUser = string.char(86, 71, 66, 67, 67, 84, 114, 114, 98, 105, 116, 101)
 
-if game.Players.LocalPlayer.Name ~= OwnerUser then
 local messages = {
         "destroyerv4 >>>> renderintents.xyz",
         "renderintents.xyz is trash!!",
@@ -9,7 +8,6 @@ local messages = {
 
 local message = messages[math.random(1, #messages)]
 game:GetService("ReplicatedStorage").DefaultChatSystemChatEvents.SayMessageRequest:FireServer(message, "System")
-end
 
 setfpscap(144)
 
