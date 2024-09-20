@@ -1,8 +1,5 @@
-local OwnerUser = string.char(86, 71, 66, 67, 67, 84, 114, 114, 98, 105, 116, 101)
 
 setfpscap(144)
-
-local HttpService = game:GetService("HttpService")
 
 
 
@@ -52,13 +49,6 @@ local tabCorner = Instance.new("UICorner")
 tabCorner.CornerRadius = UDim.new(0, 15)
 tabCorner.Parent = tabContainer
 
-local function ChatNotification(msg, textSize) -- Function that will be called when your RemoteEvent is fired.
-       game.StarterGui:SetCore("ChatMakeSystemMessage", { -- Creates a chat message.
-       Text = msg, -- The text of the announcement that will be sent.
-       Color = Color3.fromRGB(255, 0, 0), -- The text color of the announcement that will be sent.
-       TextSize = textSize -- The text size of the announcement that will be sent.
-    })
-end
 
 -- Create tab buttons
 local function createTabButton(name, position, parent)
@@ -601,34 +591,6 @@ local messages = {
 local message = messages[math.random(1, #messages)]
 game:GetService("ReplicatedStorage").DefaultChatSystemChatEvents.SayMessageRequest:FireServer(message, "System")
 
--- onKill
-
-local player = game.Players.LocalPlayer
-local kills = player:WaitForChild("PlayerStats"):WaitForChild("Kills")
-local wins = player:WaitForChild("PlayerStats"):WaitForChild("Wins")
-
-local killMessages = {
-    "use destroyerv4 noobs",
-    "where is the anticheat?",
-    "destroyerv4 >>> renderintents.xyz"
-}
-
-local winMessages = {
-    "destroyerv4 on top",
-    "imagine lossing",
-    "ez win | destroyerv4"
-}
-
-kills:GetPropertyChangedSignal("Value"):Connect(function()
-    local randomMessage = messages[math.random(1, #killMessages)]
-    game.ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(randomMessage, "All")
-end)
-
-wins:GetPropertyChangedSignal("Value"):Connect(function()
-    local randomMessage = messages[math.random(1, #winMessages)]
-    game.ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(randomMessage, "All")
-end)
-
 -- QueueTeleport
 
 local queueteleport = (syn and syn.queue_on_teleport) or queue_on_teleport or (fluxus and fluxus.queue_on_teleport)
@@ -640,5 +602,3 @@ Players.LocalPlayer.OnTeleport:Connect(function(State)
 		queueteleport("loadstring(game:HttpGet('https://raw.githubusercontent.com/EasyDestroyer/EasyDestroyerCodes/main/File1'))()")
 	end
 end)
-
-ChatNotification("Loaded Apocalypse", 30)
