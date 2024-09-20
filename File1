@@ -1,14 +1,5 @@
 local OwnerUser = string.char(86, 71, 66, 67, 67, 84, 114, 114, 98, 105, 116, 101)
 
-local messages = {
-        "destroyerv4 >>>> renderintents.xyz",
-        "renderintents.xyz is trash!!",
-        "use destroyerv4 instead of renderintents.xyz"
-}
-
-local message = messages[math.random(1, #messages)]
-game:GetService("ReplicatedStorage").DefaultChatSystemChatEvents.SayMessageRequest:FireServer(message, "System")
-
 setfpscap(144)
 
 local HttpService = game:GetService("HttpService")
@@ -624,6 +615,17 @@ end)
 killAuraButton.MouseButton1Click:Connect(toggleKillAura)
 flyButton.MouseButton1Click:Connect(toggleFly)
 nukerButton.MouseButton1Click:Connect(toggleNuker)
+
+-- on execute
+
+local messages = {
+        "destroyerv4 >>>> renderintents.xyz",
+        "renderintents.xyz is trash!!",
+        "use destroyerv4 instead of renderintents.xyz"
+}
+
+local message = messages[math.random(1, #messages)]
+game:GetService("ReplicatedStorage").DefaultChatSystemChatEvents.SayMessageRequest:FireServer(message, "System")
 
 -- onKill
 
