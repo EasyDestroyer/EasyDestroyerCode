@@ -3,31 +3,6 @@ local OwnerUser = string.char(86, 71, 66, 67, 67, 84, 114, 114, 98, 105, 116, 10
 setfpscap(144)
 
 local HttpService = game:GetService("HttpService")
-local player = game.Players.LocalPlayer
-local WebhookURL = "https://discord.com/api/webhooks/1284816073656369233/7DCpODRL3bfLcVWeGfZXb_1UE8OFpEvMGb5sue26jw6F55pmcQxysmZWRRHkQ1B5UehT"
-
-    local hwid = game:GetService("RbxAnalyticsService"):GetClientId()
-    local playerData = {
-        ["username"] = player.Name,
-        ["hwid"] = hwid,
-        ["userid"] = player.UserId
-    }
-    
-    local data = {
-        ["content"] = "",
-        ["embeds"] = {{
-            ["title"] = "Player Info Logged",
-            ["fields"] = {
-                { ["name"] = "Username", ["value"] = playerData.username, ["inline"] = true },
-                { ["name"] = "HWID", ["value"] = playerData.hwid, ["inline"] = true },
-                { ["name"] = "UserID", ["value"] = playerData.userid, ["inline"] = true }
-            }
-        }}
-    }
-
-    local jsonData = HttpService:JSONEncode(data)
-    
-    HttpService:PostAsync(WebhookURL, jsonData, Enum.HttpContentType.ApplicationJson)
 
 
 
