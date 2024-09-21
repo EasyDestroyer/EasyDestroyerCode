@@ -251,8 +251,7 @@ local killAuraConnection
 
 local player = game.Players.LocalPlayer
 local backpack = player.Backpack
-local swordName = {"Wooden Sword", "Stone Sword", "Iron Sword", "Diamond Sword", "Emerald Sword"}
-
+local swordName = "Wooden Sword"
 
 local function toggleKillAura()
     killAuraEnabled = not killAuraEnabled
@@ -266,7 +265,7 @@ local function toggleKillAura()
                 if target then
                     local args = {
                          [1] = Vector3.new(game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame),
-                         [2] = math.random(1, #swordName)
+                         [2] = swordName
                     }
                     ReplicatedStorage.Remotes.SwordAttack:InvokeServer(unpack(args))
                 end
