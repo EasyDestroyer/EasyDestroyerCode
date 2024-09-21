@@ -251,28 +251,7 @@ local killAuraConnection
 
 local player = game.Players.LocalPlayer
 local backpack = player.Backpack
-local swordName = "Wooden Sword"
-
-local function updateSwordName()
-    local swords = {
-        ["Stone Sword"] = "Stone Sword",
-        ["Diamond Sword"] = "Diamond Sword",
-        ["Iron Sword"] = "Iron Sword",
-        ["Emerald Sword"] = "Emerald Sword"
-    }
-
-    for _, item in pairs(backpack:GetChildren()) do
-        if swords[item.Name] and item.Name ~= swordName then
-            swordName = swords[item.Name]
-            print("Sword name updated to: " .. swordName)
-        end
-    end
-end
-
-while true do
-    updateSwordName()
-    wait(1)
-end
+local swordName = {"Wooden Sword", "Stone Sword", "Iron Sword", "Diamond Sword", "Emerald Sword"}
 
 
 local function toggleKillAura()
@@ -287,7 +266,7 @@ local function toggleKillAura()
                 if target then
                     local args = {
                          [1] = Vector3.new(game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame),
-                         [2] = swordName
+                         [2] = math.random(1, #swordName)
                     }
                     ReplicatedStorage.Remotes.SwordAttack:InvokeServer(unpack(args))
                 end
