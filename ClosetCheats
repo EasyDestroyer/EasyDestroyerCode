@@ -66,9 +66,9 @@ local function createTabButton(name, position, parent)
     return button
 end
 
-local collectButton = createTabButton("Collect", UDim2.new(0, 0, 0, 0), tabContainer)
-local blatantButton = createTabButton("Blatant", UDim2.new(0, 100, 0, 0), tabContainer)
-local utilityButton = createTabButton("Utility", UDim2.new(0, 200, 0, 0), tabContainer)
+local collectButton = createTabButton("Nothing", UDim2.new(0, 0, 0, 0), tabContainer)
+local blatantButton = createTabButton("Closets", UDim2.new(0, 100, 0, 0), tabContainer)
+local utilityButton = createTabButton("Nothing", UDim2.new(0, 200, 0, 0), tabContainer)
 
 -- Create the Collect frame
 local collectFrame = Instance.new("Frame")
@@ -145,8 +145,8 @@ local function createBlatantButton(name, position, parent)
 end
 
 local killAuraButton = createBlatantButton("Kill Aura", UDim2.new(0, 10, 0, 10), blatantFrame)
-local nukerButton = createBlatantButton("Nuker", UDim2.new(0, 10, 0, 90), blatantFrame)
-
+local nukerButton = createBlatantButton("Nuker", UDim2.new(0, 10, 0, 50), blatantFrame)
+local aimAssistButton = createBlatantButton("Aim Assist", UDim2.new(0, 10, 0, 90), blatantFrame)
 
 -- Find closest player excluding team members
 
@@ -272,6 +272,60 @@ end
 
 nukerButton.MouseButton1Click:Connect(toggleNuker)
 
+-- aim assist
+
+local aimAssistEnabled = false 
+local aimRadius = 100
+local maxStuds = 15 
+local player = game.Players.LocalPlayer
+local mouse = player:GetMouse()
+
+
+local function toggleAimAssist()
+    aimAssistEnabled = not aimAssistEnabled
+    aimAssistButton.BackgroundColor3 = aimAssistEnabled and Color3.fromRGB(0, 255, 0) or Color3.fromRGB(0, 0, 0)
+    aimAssistButton.BackgroundTransparency = aimAssistEnabled and 0 or 1
+end
+
+local function getClosestEnemy()
+    local closestEnemy = nil
+    local shortestDistance = aimRadius
+
+    for _, enemy in pairs(game.Workspace:GetChildren()) do
+        if enemy:FindFirstChild("Humanoid") and enemy:FindFirstChild("HumanoidRootPart") and enemy ~= player.Character then
+            local enemyPos = enemy.HumanoidRootPart.Position
+            local distanceFromPlayer = (enemyPos - player.Character.HumanoidRootPart.Position).Magnitude
+            if distanceFromPlayer <= maxStuds then
+                local screenPos, onScreen = workspace.CurrentCamera:WorldToViewportPoint(enemyPos)
+                if onScreen then
+                    local distance = (Vector2.new(screenPos.X, screenPos.Y) - Vector2.new(mouse.X, mouse.Y)).Magnitude
+                    if distance < shortestDistance then
+                        shortestDistance = distance
+                        closestEnemy = enemy
+                    end
+                end
+            end
+        end
+    end
+    return closestEnemy
+end
+
+local function aimAtEnemy(enemy)
+    if enemy then
+        local enemyPos = enemy.HumanoidRootPart.Position
+        local screenPos = workspace.CurrentCamera:WorldToViewportPoint(enemyPos)
+        mousemoverel(screenPos.X - mouse.X, screenPos.Y - mouse.Y)
+    end
+end
+
+game:GetService("RunService").RenderStepped:Connect(function()
+    if aimAssistEnabled then
+        local closestEnemy = getClosestEnemy()
+        aimAtEnemy(closestEnemy)
+    end
+end)
+
+aimAssistButton.MouseButton1Click:Connect(toggleAimAssist)
 
 
 -- Create Utility frame
