@@ -223,6 +223,8 @@ local function toggleKillAura()
     end
 end
 
+killAuraButton.MouseButton1Click:Connect(function(toggleKillAura)
+
 -- Toggle Nuker
 local nukerEnabled = false
 local nukerConnection
@@ -268,7 +270,7 @@ local function toggleNuker()
     end
 end
 
-
+nukerButton.MouseButton1Click:Connect(toggleNuker)
 
 
 
