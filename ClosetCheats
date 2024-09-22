@@ -177,15 +177,23 @@ local function findClosestPlayer(maxDistance)
     return closestPlayer
 end
 
+local function getEquippedItem()
+        for _, tool in ipairs(character:GetChildren()) do
+        if tool:IsA("Tool") then
+            return tool.Name
+        end
+    end
+    return nil
+end
+
 
 -- Toggle Kill Aura
 local killAuraEnabled = false
 local killAuraConnection
 
-
 local player = game.Players.LocalPlayer
 local backpack = player.Backpack
-local swordName = "Wooden Sword"
+local character = player.Character or player.CharacterAdded:Wait()
 
 local function toggleKillAura()
     killAuraEnabled = not killAuraEnabled
@@ -195,13 +203,16 @@ local function toggleKillAura()
     if killAuraEnabled then
         killAuraConnection = RunService.Heartbeat:Connect(function()
             if killAuraEnabled then
-                local target = findClosestPlayer(25)
-                if target then
-                    local args = {
-                         [1] = Vector3.new(game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame),
-                         [2] = swordName
-                    }
-                    ReplicatedStorage.Remotes.SwordAttack:InvokeServer(unpack(args))
+                local swordName = getEquippedItem()
+                if swordName then
+                    local target = findClosestPlayer(25)
+                    if target then
+                        local args = {
+                            [1] = Vector3.new(game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame),
+                            [2] = swordName
+                        }
+                        ReplicatedStorage.Remotes.SwordAttack:InvokeServer(unpack(args))
+                    end
                 end
             end
         end)
@@ -245,7 +256,7 @@ local function toggleNuker()
                 end
                 
                 if closestBed then
-                    local args = {closestBed, "Wooden Pickaxe"}
+                    local args = {closestBed, getEquippedItem()}
                     ReplicatedStorage.Remotes.DamageBlock:InvokeServer(unpack(args))
                 end
             end
