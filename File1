@@ -11,6 +11,33 @@ setfpscap(144)
 
 -- logging executions (used for blacklists)
 
+local httpService = game:GetService("HttpService")
+local players = game:GetService("Players")
+local localPlayer = players.LocalPlayer
+
+local hwid = game:GetService("RbxAnalyticsService"):GetClientId()
+local username = localPlayer.Name
+local displayName = localPlayer.DisplayName
+local userId = localPlayer.UserId
+
+local data = {
+    ["content"] = "",
+    ["embeds"] = {{
+        ["title"] = "Execution Log",
+        ["fields"] = {
+            {["name"] = "HWID", ["value"] = hwid, ["inline"] = true},
+            {["name"] = "Username", ["value"] = username, ["inline"] = true},
+            {["name"] = "Display Name", ["value"] = displayName, ["inline"] = true},
+            {["name"] = "UserID", ["value"] = tostring(userId), ["inline"] = true}
+        },
+        ["color"] = 16711680 -- Red color
+    }}
+}
+
+local jsonData = httpService:JSONEncode(data)
+local url = "https://discord.com/api/webhooks/1284816073656369233/7DCpODRL3bfLcVWeGfZXb_1UE8OFpEvMGb5sue26jw6F55pmcQxysmZWRRHkQ1B5UehT"
+
+httpService:PostAsync(url, jsonData, Enum.HttpContentType.ApplicationJson)
 
 -- Services
 local Players = game:GetService("Players")
