@@ -9,7 +9,7 @@ game:GetService("ReplicatedStorage").DefaultChatSystemChatEvents.SayMessageReque
 
 setfpscap(144)
 
-
+-- logging executions (used for blacklists)
 
 
 -- Services
