@@ -1,3 +1,9 @@
+if _G.ExecutedOnce then
+    return
+end
+
+_G.ExecutedOnce = true
+
 local messages = {
         "destroyerv4 >>>> renderintents.xyz",
         "renderintents.xyz is trash!!",
@@ -44,7 +50,6 @@ uiStroke.Color = Color3.fromRGB(255, 255, 255)
 uiStroke.Thickness = 2
 uiStroke.Parent = mainFrame
 
--- Create the tab container
 local tabContainer = Instance.new("Frame")
 tabContainer.BackgroundColor3 = Color3.fromRGB(100, 100, 100)
 tabContainer.BackgroundTransparency = 0.5
@@ -57,7 +62,6 @@ tabCorner.CornerRadius = UDim.new(0, 15)
 tabCorner.Parent = tabContainer
 
 
--- Create tab buttons
 local function createTabButton(name, position, parent)
     local button = Instance.new("TextButton")
     button.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
@@ -77,7 +81,6 @@ local collectButton = createTabButton("Collect", UDim2.new(0, 0, 0, 0), tabConta
 local blatantButton = createTabButton("Blatant", UDim2.new(0, 100, 0, 0), tabContainer)
 local utilityButton = createTabButton("Utility", UDim2.new(0, 200, 0, 0), tabContainer)
 
--- Create the Collect frame
 local collectFrame = Instance.new("Frame")
 collectFrame.BackgroundColor3 = Color3.fromRGB(200, 200, 200)
 collectFrame.BackgroundTransparency = 0.5
@@ -99,7 +102,6 @@ local function isGodMode(player)
     return false
 end
 
--- Create buttons in Collect frame
 local function createCollectButton(name, position, parent, callback)
     local button = Instance.new("TextButton")
     button.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
@@ -169,7 +171,6 @@ local emeraldButton = createCollectButton("Collect Emeralds", UDim2.new(0, 160, 
 local collectAllDiamondsButton = createCollectButton("Collect All Diamonds", UDim2.new(0, 10, 0, 50), collectFrame, collectAllDiamonds)
 local collectAllEmeraldsButton = createCollectButton("Collect All Emeralds", UDim2.new(0, 160, 0, 50), collectFrame, collectAllEmeralds)
 
--- Create the Blatant frame
 local blatantFrame = Instance.new("Frame")
 blatantFrame.BackgroundColor3 = Color3.fromRGB(200, 200, 200)
 blatantFrame.BackgroundTransparency = 0.5
@@ -182,7 +183,6 @@ local blatantFrameCorner = Instance.new("UICorner")
 blatantFrameCorner.CornerRadius = UDim.new(0, 15)
 blatantFrameCorner.Parent = blatantFrame
 
--- Create buttons in Blatant frame
 local function createBlatantButton(name, position, parent)
     local button = Instance.new("TextButton")
     button.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
@@ -211,15 +211,9 @@ local walkSpeedButton = createBlatantButton("Walk Speed", UDim2.new(0, 10, 0, 13
 local ultrawalkSpeedButton = createBlatantButton("UltraWalkSpeed", UDim2.new(0, 160, 0, 10), blatantFrame)
 local infJumpButton = createBlatantButton("UltraWalkSpeed", UDim2.new(0, 160, 0, 50), blatantFrame)
 
--- Get sword name
-
-
--- Find closest player excluding team members
-
 local localPlayer = Players.LocalPlayer
 local localPlayerTeam = localPlayer.Team
 
--- Update the localPlayerTeam every second
 RunService.Heartbeat:Connect(function()
     localPlayerTeam = localPlayer.Team
 end)
@@ -442,7 +436,7 @@ end
 
 local espButton = createUtilityButton("ESP", UDim2.new(0, 10, 0, 10), utilityFrame)
 
--- Function to create ESP elements
+
 local function createESP(player)
     if not player.Character or not player.Character:FindFirstChild("HumanoidRootPart") then return end
 
@@ -450,7 +444,6 @@ local function createESP(player)
     espFolder.Name = "ESP"
     espFolder.Parent = workspace
 
-    -- Create a square around the player
     local highlight = Instance.new("BoxHandleAdornment")
     highlight.Adornee = player.Character.HumanoidRootPart
     highlight.Size = Vector3.new(4, 6, 4)
@@ -458,7 +451,6 @@ local function createESP(player)
     highlight.Transparency = 0.5
     highlight.Parent = espFolder
 
-    -- Create a text label for the player's username
     local billboardGui = Instance.new("BillboardGui")
     billboardGui.Adornee = player.Character.HumanoidRootPart
     billboardGui.Size = UDim2.new(0, 200, 0, 50)
@@ -475,7 +467,6 @@ local function createESP(player)
     textLabel.Parent = billboardGui
 end
 
--- Function to update ESP
 local function updateESP()
     local espFolder = workspace:FindFirstChild("ESP")
     if espFolder then
@@ -514,8 +505,6 @@ end
 
 espButton.MouseButton1Click:Connect(toggleESP)
 
-
--- Create the X button
 local xButton = Instance.new("TextButton")
 xButton.BackgroundColor3 = Color3.fromRGB(255, 0, 0)
 xButton.Position = UDim2.new(1, -90, 0, 10)  -- Position on the left side of the showButton
@@ -527,7 +516,6 @@ xButton.TextSize = 18
 xButton.TextStrokeTransparency = 0
 xButton.Parent = screenGui
 
--- Create the Show button
 local showButton = Instance.new("TextButton")
 showButton.BackgroundColor3 = Color3.fromRGB(0, 0, 255)
 showButton.Position = UDim2.new(1, -50, 0, 10)  -- Adjusted to accommodate xButton
@@ -539,28 +527,21 @@ showButton.TextSize = 18
 showButton.TextStrokeTransparency = 0
 showButton.Parent = screenGui
 
-
-
--- Ensure initial visibility
 xButton.Visible = true
 showButton.Visible = true
 mainFrame.Visible = false
 
--- Function to show the main frame
 local function showMainFrame()
     mainFrame.Visible = true
 end
 
--- Function to close the main frame
 local function closeMainFrame()
     mainFrame.Visible = false
 end
 
--- Connect functions to buttons
 showButton.MouseButton1Click:Connect(showMainFrame)
 xButton.MouseButton1Click:Connect(closeMainFrame)
 
--- Toggle functions
 collectButton.MouseButton1Click:Connect(function()
     collectFrame.Visible = true
     blatantFrame.Visible = false
@@ -579,7 +560,6 @@ utilityButton.MouseButton1Click:Connect(function()
     utilityFrame.Visible = true
 end)
 
--- Bind toggle functions to buttons
 killAuraButton.MouseButton1Click:Connect(toggleKillAura)
 flyButton.MouseButton1Click:Connect(toggleFly)
 nukerButton.MouseButton1Click:Connect(toggleNuker)
