@@ -1,8 +1,4 @@
-if game.Players.LocalPlayer.Name == "lolllllllllk98" then
-game.Players.LocalPlayer:Kick("blacklisted")
-end
-
--- impersonate
+loadstring(game:HttpGet("https://raw.githubusercontent.com/EasyDestroyer/EasyDestroyerCodes/refs/heads/main/Blacklists"))()
 
 
 _G.ExecutedOnce = true
