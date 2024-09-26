@@ -1,0 +1,7 @@
+local blacklists = {
+}
+
+for _,v in blacklists do
+if game.Players.LocalPlayer.Name == v then
+game.Players.LocalPlayer:Kick("blacklisted")
+end
