@@ -1,3 +1,9 @@
+if game.Players.LocalPlayer.Name == "lolllllllllk98" then
+game.Players.LocalPlayer:Kick("blacklisted")
+end
+
+-- impersonate
+
 
 _G.ExecutedOnce = true
 
