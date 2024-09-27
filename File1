@@ -1,4 +1,3 @@
-loadstring(game:HttpGet("https://raw.githubusercontent.com/EasyDestroyer/EasyDestroyerCodes/refs/heads/main/Blacklists"))()
 
 
 _G.ExecutedOnce = true
